@@ -26,17 +26,21 @@ pipeline {
     }
 }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
+       stage('Install Dependencies') {
+    steps {
+        nodejs('Node18') {
+            sh 'npm install'
         }
+    }
+}
 
-        stage('Run Tests') {
-            steps {
-                sh 'npm test'
-            }
+stage('Run Tests') {
+    steps {
+        nodejs('Node18') {
+            sh 'npm test'
         }
+    }
+}
 
         stage('Build Docker Image') {
             steps {
