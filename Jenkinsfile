@@ -19,22 +19,28 @@ pipeline {
         }
 
         stage('Checkout Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/yourusername/nodejs-devops-capstone.git'
-            }
-        }
+    steps {
+        git branch: 'main',
+            credentialsId: 'github-pat',
+            url: 'https://github.com/vimalpree/nodejs-devops-capstone.git'
+    }
+}
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
+       stage('Install Dependencies') {
+    steps {
+        nodejs('Node18') {
+            sh 'npm install'
         }
+    }
+}
 
-        stage('Run Tests') {
-            steps {
-                sh 'npm test'
-            }
+stage('Run Tests') {
+    steps {
+        nodejs('Node18') {
+            sh 'npm test'
         }
+    }
+}
 
         stage('Build Docker Image') {
             steps {
